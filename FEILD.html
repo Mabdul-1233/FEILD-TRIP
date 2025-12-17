@@ -1,133 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Field Trip Permission (THIS IS LAST)</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            margin-top: 100px;
-            background: linear-gradient(135deg, #ff9a9e, #fecfef, #fad0c4, #a8edea);
-            background-size: 400% 400%;
-            animation: gradientShift 10s ease infinite;
-            color: #333;
-            overflow: hidden;
-            position: relative;
-        }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            pointer-events: none;
-            z-index: -1;
-        }
-        h1 {
-            color: #d63384;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            font-family: 'Georgia', serif;
-        }
-        p {
-            color: #6c757d;
-            font-style: italic;
-        }
-        button {
-            padding: 12px 24px;
-            font-size: 18px;
-            margin: 15px;
-            cursor: pointer;
-            border: none;
-            border-radius: 25px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
-            z-index: 1;
-        }
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-        }
-        #noButton {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            color: white;
-        }
-        #yesButton {
-            background: linear-gradient(45deg, #74b9ff, #0984e3);
-            color: white;
-        }
-        #message {
-            margin-top: 30px;
-            font-size: 20px;
-            font-weight: bold;
-            color: #d63384;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
-        /* Floating hearts animation */
-        .heart {
-            position: absolute;
-            color: #ff6b9d;
-            font-size: 24px;
-            animation: float 6s linear infinite;
-            pointer-events: none;
-        }
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
-        }
-    </style>
+<title>Event Confirmation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.card{
+    background:#ffffff;
+    width:100%;
+    max-width:420px;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.15);
+    animation:fadeIn 0.8s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#333;
+}
+input,select,textarea{
+    width:100%;
+    margin-top:12px;
+    padding:10px 12px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    font-size:14px;
+    outline:none;
+}
+input:focus,select:focus,textarea:focus{border-color:#764ba2}
+button{
+    margin-top:18px;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+    transition:transform 0.2s,box-shadow 0.2s;
+}
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+.result{
+    margin-top:20px;
+    padding:15px;
+    border-radius:12px;
+    background:#f7f7ff;
+    color:#333;
+    display:none;
+    line-height:1.6;
+}
+.notice{
+    margin-top:15px;
+    padding:12px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#ffecd2,#fcb69f);
+    text-align:center;
+    font-weight:600;
+    display:none;
+}
+.footer{
+    text-align:center;
+    font-size:12px;
+    color:#777;
+    margin-top:15px;
+}
+</style>
 </head>
 <body>
-    <h1>Mom, Can I Go on the Field Trip?</h1>
-    <p>Please grant permission! 💖</p>
-    <button id="yesButton">Yes</button>
-    <button id="noButton">No</button>
-    <div id="message"></div>
 
-    <!-- Floating hearts for romantic effect -->
-    <div class="heart" style="left: 10%; animation-delay: 0s;">❤️</div>
-    <div class="heart" style="left: 20%; animation-delay: 1s;">💕</div>
-    <div class="heart" style="left: 30%; animation-delay: 2s;">💖</div>
-    <div class="heart" style="left: 40%; animation-delay: 3s;">💗</div>
-    <div class="heart" style="left: 50%; animation-delay: 4s;">💓</div>
-    <div class="heart" style="left: 60%; animation-delay: 5s;">💘</div>
-    <div class="heart" style="left: 70%; animation-delay: 6s;">💝</div>
-    <div class="heart" style="left: 80%; animation-delay: 7s;">💞</div>
-    <div class="heart" style="left: 90%; animation-delay: 8s;">💟</div>
+<div class="card">
+<h2>✨ Event Confirmation ✨</h2>
 
-    <script>
-        const noButton = document.getElementById('noButton');
-        const yesButton = document.getElementById('yesButton');
-        const message = document.getElementById('message');
+<input id="name" placeholder="Your Name">
 
-        yesButton.addEventListener('click', () => {
-            message.textContent = "Yay! Thanks, Mom! Permission granted! 💕";
-            message.style.color = "#0984e3";
-            noButton.style.display = "none"; // Hide the No button
-        });
+<select id="occasion">
+<option value="">Select Occasion</option>
+<option>Ramadan(Eid-ul-fitr)(UMAIR CANT'T COME BORDS)</option>
+<option>Sankranti(4-5 or 5-6 days)(ZAKI CAN'T COME BOARD EXAMS PREPARATIONS)</option>
+<option>Summer Holidays(2 Months)</option>
+</select>
 
-        noButton.addEventListener('click', () => {
-            // Make the button "float" by moving it to a random position
-            const maxX = window.innerWidth - noButton.offsetWidth;
-            const maxY = window.innerHeight - noButton.offsetHeight;
-            const randomX = Math.random() * maxX;
-            const randomY = Math.random() * maxY;
-            noButton.style.position = 'absolute';
-            noButton.style.left = randomX + 'px';
-            noButton.style.top = randomY + 'px';
-            message.textContent = "Are you sure? Try again! 😘";
-            message.style.color = "#ff6b6b";
-        });
-    </script>
+<select id="event">
+<option value="">Select Event</option>
+<option>Get Together</option>
+<option>Eid</option>
+<option>Family Function</option>
+</select>
+
+<select id="status">
+<option value="">Attendance Status</option>
+<option>I cannot attend</option>
+<option>I can attend</option>
+<option>Everyone can attend</option>
+</select>
+
+
+
+<textarea id="suggestion" placeholder="Any suggestion (optional)"></textarea>
+
+<button onclick="showDetails()">Submit</button>
+
+<div class="result" id="result"></div>
+<div class="notice" id="notice">📸 Please take a screenshot and send it on Instagram</div>
+
+<div class="footer">Made by KAREEM (ZAKI)</div>
+</div>
+
+<script>
+function showDetails(){
+    var n = document.getElementById('name').value;
+    var o = document.getElementById('occasion').value;
+    var e = document.getElementById('event').value;
+    var s = document.getElementById('status').value;
+    var g = document.getElementById('suggestion').value;
+
+    if(n === '' || o === '' || e === '' || s === ''){
+        alert('Please fill all required fields');
+        return;
+    }
+
+    document.getElementById('result').innerHTML =
+        '<b>Name:</b> ' + n + '<br>' +
+        '<b>Occasion:</b> ' + o + '<br>' +
+        '<b>Event:</b> ' + e + '<br>' +
+        '<b>Attendance:</b> ' + s + '<br>' +
+    
+        '<b>Suggestion:</b> ' + (g || 'None');
+
+    document.getElementById('result').style.display = 'block';
+    document.getElementById('notice').style.display = 'block';
+}
+</script>
+
 </body>
 </html>
+
